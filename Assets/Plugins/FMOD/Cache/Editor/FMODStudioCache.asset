@@ -145,7 +145,7 @@ MonoBehaviour:
   Path: Assets/Sounds/FMODBanks/Music.bank
   Name: Music
   StudioPath: bank:/Music
-  lastModified: 638692107608183104
+  lastModified: 638785326126266684
   FileSizes: []
   Exists: 1
 --- !u!114 &-2652651674616768300
@@ -294,7 +294,7 @@ MonoBehaviour:
   - {fileID: 4381005980084367100}
   StringsBanks:
   - {fileID: 2970794866870452152}
-  cacheTime: 638692111137782448
+  cacheTime: 638785326126328250
   cacheVersion: 131623
 --- !u!114 &534459551059651755
 MonoBehaviour:
@@ -393,7 +393,7 @@ MonoBehaviour:
   Path: Assets/Sounds/FMODBanks/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638692107608015471
+  lastModified: 638785326126178028
   FileSizes:
   - Name: 
     Value: 1592
@@ -468,7 +468,7 @@ MonoBehaviour:
   Path: Assets/Sounds/FMODBanks/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638692107608015471
+  lastModified: 638785326126173007
   FileSizes: []
   Exists: 1
 --- !u!114 &4566694464142873865
@@ -542,7 +542,7 @@ MonoBehaviour:
   Path: Assets/Sounds/FMODBanks/Character.bank
   Name: Character
   StudioPath: bank:/Character
-  lastModified: 638692032710170843
+  lastModified: 638785326126071181
   FileSizes: []
   Exists: 1
 --- !u!114 &5377223445544382549
@@ -587,7 +587,7 @@ MonoBehaviour:
   Path: Assets/Sounds/FMODBanks/UI.bank
   Name: UI
   StudioPath: bank:/UI
-  lastModified: 638692111137782448
+  lastModified: 638785326126328250
   FileSizes: []
   Exists: 1
 --- !u!114 &6181608701373567757

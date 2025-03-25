@@ -43,14 +43,7 @@ public class CharacterScript : MonoBehaviour
     GameObject ground;
     GameObject GridObject;
     Grid grid;
-    //Sound Effects
-    [SerializeField] AudioClip JumpFX;
-    [SerializeField] AudioClip DoubleJumpFX;
-    [SerializeField] AudioClip WalkFX;
-    [SerializeField] AudioClip WalkGrassFX;
-    [SerializeField] AudioClip LandingFX;
-    [SerializeField] AudioClip LandingGrassFX;
-    AudioSource walkingFX;
+    
     // Player Status Variables
     private float horizontalInput;
     private float verticalInput;
@@ -70,11 +63,11 @@ public class CharacterScript : MonoBehaviour
 
     [SerializeField] private UnityIntEvent OnHurt;
     [SerializeField] private UnityEvent OnDeath;
-    
+    [SerializeField] private UnityEvent OnJump;
+    [SerializeField] private UnityEvent OnDoubleJump;
+
     private void Start()
     {
-        walkingFX = GetComponent<AudioSource>();
-        walkingFX.clip = WalkFX;
         ground = GameObject.FindWithTag("Ground");
         GridObject = GameObject.FindWithTag("Grid");
         grid = GridObject.GetComponent<Grid>();
@@ -216,7 +209,7 @@ public class CharacterScript : MonoBehaviour
         {
             PlayerAnimator.SetBool("isJumping", false);
             isJumping = false;
-            makeLandingSound(whatAmISteppingOn());
+            //makeLandingSound(whatAmISteppingOn());
         }
         else if ((Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) && (amountofJumps > 0))
         {
@@ -225,9 +218,9 @@ public class CharacterScript : MonoBehaviour
             PlayerAnimator.SetBool("isJumping", true);
 
             if (isJumping)
-                SoundFXManager.Instance.playSFXClip(DoubleJumpFX, transform, 1);
+                OnDoubleJump.Invoke();
             else
-                SoundFXManager.Instance.playSFXClip(JumpFX, transform, 1);
+                OnJump.Invoke();
 
             isJumping = true;
 
@@ -276,16 +269,16 @@ public class CharacterScript : MonoBehaviour
             body.velocity = new Vector2(speed * direction, body.velocity.y);
             if ((isGrounded) || (walkingOnStairsTime > 0))
             {
-                makeSteppingSound(whatAmISteppingOn());
-                if (!walkingFX.isPlaying)
-                    walkingFX.Play();
+                //makeSteppingSound(whatAmISteppingOn());
+                //if (!walkingFX.isPlaying)
+                //    walkingFX.Play();
                 CheckForStairs(direction);
             }
 
             CheckForWalljump(direction);
             transform.localScale = new Vector3(direction, 1, 1);
-            if ((walkingFX.isPlaying) && (isJumping))
-                walkingFX.Stop();
+           // if ((walkingFX.isPlaying) && (isJumping))
+            //    walkingFX.Stop();
         }
         else
         {
@@ -298,7 +291,7 @@ public class CharacterScript : MonoBehaviour
             }
 
             PlayerAnimator.SetFloat("speed", 0.0f);
-            walkingFX.Stop();
+           // walkingFX.Stop();
         }
 
 
@@ -369,60 +362,6 @@ public class CharacterScript : MonoBehaviour
     {
         if (isGrounded && horizontalInput == 0 && verticalInput == 0 && !isJumping && !pushed)
             body.velocity *= groundDecay;
-    }
-
-    string whatAmISteppingOn()
-    {
-        Tilemap groundTiles = ground.GetComponent<Tilemap>();
-        Vector3Int tilePos = grid.WorldToCell(BottomRay.transform.position);
-        // int SZ = groundTiles.cellSize; 
-
-        TileBase theTile = groundTiles.GetTile(tilePos);
-
-        /*  while (theTile == null)
-          {
-              tilePos = Vector3Int.RoundToInt(tilePos - new Vector3 (0,groundTiles.cellSize.y,0));
-              theTile = groundTiles.GetTile(tilePos);
-          }*/
-
-        if (tileTypes.Grasstiles.Contains(theTile))
-            return "grass";
-        else
-            return "concrete";
-    }
-
-    void makeSteppingSound(string Type)
-    {
-        switch (Type)
-
-        {
-            case "grass":
-                walkingFX.clip = WalkGrassFX;
-                break;
-
-            default:
-                walkingFX.clip = WalkFX;
-                break;
-        }
-
-
-
-    }
-
-    void makeLandingSound(string Type)
-    {
-        switch (Type)
-
-        {
-            case "grass":
-                SoundFXManager.Instance.playSFXClip(LandingGrassFX, transform, 1);
-                break;
-
-            default:
-                SoundFXManager.Instance.playSFXClip(LandingFX, transform, 1);
-                break;
-        }
-
     }
 }
 
